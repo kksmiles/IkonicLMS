@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class QuizController extends Controller
 {
@@ -14,7 +15,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        $quizzes = Quiz::all();
+        return view('quizzes.index', compact('quizzes'));
     }
 
     /**
@@ -24,7 +26,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        //
+        return view('quizzes.create');
     }
 
     /**
@@ -35,7 +37,17 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'course_id' => ['numeric'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable','max:255'],
+            'due_date' => ['required', 'date_format:Y-m-d H:i:s'],
+            'attempts_allowed' => ['required', 'numeric'],
+            'pass_percentage' => ['required', 'numeric'],
+            'grading_method' => ['required', Rule::in(['Highest Attempt', 'First Attempt', 'Last Attempt'])],
+        ]);
+        Quiz::create($attributes);
+        return redirect(route('quizzes.index'));
     }
 
     /**
@@ -46,7 +58,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        //
+        return view('quizzes.show', compact('quiz'));
     }
 
     /**
@@ -57,7 +69,7 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
-        //
+        return view('quizzes.edit', compact('quiz'));
     }
 
     /**
@@ -69,7 +81,24 @@ class QuizController extends Controller
      */
     public function update(Request $request, Quiz $quiz)
     {
-        //
+        $attributes = $request->validate([
+            'course_id' => ['numeric'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable','max:255'],
+            'due_date' => ['required', 'date_format:Y-m-d H:i:s'],
+            'attempts_allowed' => ['required', 'numeric'],
+            'pass_percentage' => ['required', 'numeric'],
+            'grading_method' => ['required', Rule::in(['Highest Attempt', 'First Attempt', 'Last Attempt'])],
+        ]);
+        $quiz->course_id = $attributes['course_id'];
+        $quiz->title = $attributes['title'];
+        $quiz->description = $attributes['description'];
+        $quiz->due_date = $attributes['due_date'];
+        $quiz->attempts_allowed = $attributes['attempts_allowed'];
+        $quiz->pass_percentage = $attributes['pass_percentage'];
+        $quiz->grading_method = $attributes['grading_method'];
+        $quiz->save();
+        return redirect(route('quizzes.index'));
     }
 
     /**
@@ -80,6 +109,7 @@ class QuizController extends Controller
      */
     public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+        return redirect(route('quizzes.index'));
     }
 }

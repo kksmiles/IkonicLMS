@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Question extends Model
 {
@@ -21,6 +22,6 @@ class Question extends Model
     }
     public function correct_option()
     {
-        return $this->hasOne('App\Models\Option', 'correct_option_id', 'id');
+        return $this->hasOne('App\Models\Option', 'id', 'correct_option_id');
     }
 }

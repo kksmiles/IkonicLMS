@@ -16,7 +16,7 @@ class CreateCourseMaterialTopicsTable extends Migration
         Schema::create('course_material_topics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->text('description')->nullable();
             $table->boolean('hidden')->default(0);
             $table->timestamps();

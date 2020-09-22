@@ -9,7 +9,7 @@ class Option extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $table = 'quizzes';
+    protected $table = 'options';
 
     public function question()
     {

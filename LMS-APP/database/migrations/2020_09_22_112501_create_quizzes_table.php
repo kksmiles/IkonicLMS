@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateQuizzesTable extends Migration
 {
     /**
@@ -21,7 +22,7 @@ class CreateQuizzesTable extends Migration
             $table->dateTime('due_date');
             $table->integer('attempts_allowed')->default(1);
             $table->integer('pass_percentage')->default(50);
-            $table->string('grading_method')->default("Highest");
+            $table->string('grading_method')->default("Highest Attempt");
             $table->timestamps();
         });
     }
