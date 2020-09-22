@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\CourseMaterialTopic;
+use Illuminate\Http\Request;
+
+class CourseMaterialTopicController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $course_material_topics = CourseMaterialTopic::all();
+        return view('course-material-topics.index', compact('course_material_topics'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('course-material-topics.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $attributes = $request->validate([
+            'course_id' => ['numeric'],
+            'title' => ['string', 'required', 'max:255'],
+            'description' => ['nullable', 'max:255'],
+            'hidden' => ['boolean'],
+        ]);
+        CourseMaterialTopic::create($attributes);
+        return redirect(route('course-material-topics.index'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\CourseMaterialTopic  $course_material_topic
+     * @return \Illuminate\Http\Response
+     */
+    public function show(CourseMaterialTopic $course_material_topic)
+    {
+        return view('course-material-topics.show', compact('course_material_topic'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\CourseMaterialTopic  $course_material_topic
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(CourseMaterialTopic $course_material_topic)
+    {
+        return view('course-material-topics.edit', compact('course_material_topic'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\CourseMaterialTopic  $course_material_topic
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, CourseMaterialTopic $course_material_topic)
+    {
+        $attributes = $request->validate([
+            'course_id' => ['numeric'],
+            'title' => ['string', 'required', 'max:255'],
+            'description' => ['nullable', 'max:255'],
+            'hidden' => ['boolean'],
+        ]);
+
+        $course_material_topic->course_id = $attributes['course_id'];        
+        $course_material_topic->title = $attributes['title'];        
+        $course_material_topic->description = $attributes['description'];        
+        $course_material_topic->hidden = $attributes['hidden'];        
+        $course_material_topic->save();
+
+        return redirect(route('course-material-topics.index'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\CourseMaterialTopic  $course_material_topic
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(CourseMaterialTopic $course_material_topic)
+    {
+        $course_material_topic->delete();
+        return redirect(route('course-material-topics.index'));
+    }
+}

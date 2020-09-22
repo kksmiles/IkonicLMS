@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Course;
+use App\Models\CourseMaterial;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class CourseFactory extends Factory
+class CourseMaterialFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Course::class;
+    protected $model = CourseMaterial::class;
 
     /**
      * Define the model's default state.
@@ -23,12 +23,10 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'department_id' => rand(1,3),
+            'course_material_topic_id' => rand(1,5),
             'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->image,
-            'start_date' => $this->faker->date,
-            'end_date' => $this->faker->date,
+            'course_material_file' => $this->faker->image,
         ];
     }
 }

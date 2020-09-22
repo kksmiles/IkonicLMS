@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseMaterialTopic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -54,7 +55,12 @@ class CourseController extends Controller
             $attributes['image']=$url;
         }
 
-        Course::create($attributes);
+        $course = Course::create($attributes);
+        $course_material_topic = new CourseMaterialTopic;
+        $course_material_topic->course_id = $course->id;
+        $course_material_topic->title = "Announcements";
+        $course_material_topic->hidden = 0;
+        $course_material_topic->save();
         return redirect(route('courses.index'));
     }
 

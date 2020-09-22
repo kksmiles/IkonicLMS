@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Course;
+use App\Models\Assignment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class CourseFactory extends Factory
+class AssignmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Course::class;
+    protected $model = Assignment::class;
 
     /**
      * Define the model's default state.
@@ -23,12 +23,12 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'department_id' => rand(1,3),
+            'course_material_topic_id' => rand(1,5),
             'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->image,
-            'start_date' => $this->faker->date,
-            'end_date' => $this->faker->date,
+            'assignment_file' => $this->faker->image,
+            'full_grade' => $this->faker->randomFloat(2, 5, 20),
+            'due_date' => $this->faker->date,
         ];
     }
 }
