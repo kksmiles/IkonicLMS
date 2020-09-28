@@ -40,3 +40,7 @@ Route::resource('assignments', 'AssignmentController');
 Route::resource('quizzes', 'QuizController');
 Route::resource('questions', 'QuestionController');
 Route::resource('options', 'OptionController');
+
+Route::get('/home', function(){
+    return view('home');
+});

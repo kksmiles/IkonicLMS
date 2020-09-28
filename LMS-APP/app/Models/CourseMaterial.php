@@ -15,4 +15,8 @@ class CourseMaterial extends Model
     {
         return $this->belongsTo('App\Models\CourseMaterialTopic', 'course_material_topic_id', 'id');
     }
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment', 'course_material_id', 'id');
+    }
 }

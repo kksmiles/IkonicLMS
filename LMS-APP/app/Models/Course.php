@@ -19,4 +19,8 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\CourseMaterialTopic', 'course_id', 'id');
     }
+    public function class_periods()
+    {
+        return $this->hasMany('App\Models\ClassPeriod', 'course_id', 'id');
+    }
 }
