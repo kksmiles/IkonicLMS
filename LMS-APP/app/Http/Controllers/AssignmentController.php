@@ -107,12 +107,12 @@ class AssignmentController extends Controller
             $assignment->assignment_file = $attributes['assignment_file'];
         }
 
-        $assignment->course_material_topic_id = $attributes['course_material_topic_id'];        
-        $assignment->title = $attributes['title'];        
-        $assignment->description = $attributes['description'];        
-        $assignment->full_grade = $attributes['full_grade'];        
-        $assignment->due_date = $attributes['due_date'];        
-        $assignment->save(); 
+        $assignment->course_material_topic_id = $attributes['course_material_topic_id'];
+        $assignment->title = $attributes['title'];
+        $assignment->description = $attributes['description'];
+        $assignment->full_grade = $attributes['full_grade'];
+        $assignment->due_date = $attributes['due_date'];
+        $assignment->save();
         return redirect(route('assignments.index'));
     }
 
