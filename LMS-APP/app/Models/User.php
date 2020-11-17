@@ -41,6 +41,15 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Department', 'instructor_department', 'instructor_id', 'department_id');
     }
 
+    public function learner_courses()
+    {
+        return $this->belongsToMany('App\Models\Course', 'learner_course', 'learner_id', 'course_id');
+    }
+
+    public function instructor_courses()
+    {
+        return $this->belongsToMany('App\Models\Course', 'instructor_course', 'instructor_id', 'course_id');
+    }
 
     public function batches()
     {
@@ -60,5 +69,9 @@ class User extends Authenticatable
     public function learner_class_periods()
     {
         return $this->belongsToMany('App\Models\ClassPeriod','learner_class_period', 'learner_id', 'class_period_id');
+    }
+
+    public function getImageURL() {
+        return $this->image ? $this->image : '/img/user-default-avatar.svg';
     }
 }

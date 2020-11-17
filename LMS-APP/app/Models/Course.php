@@ -11,6 +11,14 @@ class Course extends Model
     protected $guarded = [];
     protected $table = 'courses';
 
+    public function learners()
+    {
+        return $this->belongsToMany('App\Models\User', 'learner_course', 'course_id', 'learner_id');
+    }
+    public function instructors()
+    {
+        return $this->belongsToMany('App\Models\User', 'instructor_course', 'course_id', 'instructor_id');
+    }
     public function department()
     {
         return $this->belongsTo('App\Models\Department', 'department_id', 'id');

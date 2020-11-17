@@ -7,6 +7,7 @@ use App\Models\CourseMaterialTopic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -47,11 +48,12 @@ class CourseController extends Controller
             'end_date' => ['required', 'date'],
             'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024']
         ]);
-
+        $current_timestamp = Carbon::now()->timestamp;
         if($request->hasFile('image')) {
+            $image_name = $current_timestamp . "_" . $request->image->getClientOriginalName();
             $extension = $request->image->extension();
-            $request->image->storeAs('/public/courses', $attributes['title'].".".$extension);
-            $url = Storage::url("courses/".$attributes['title'].".".$extension);
+            $request->image->storeAs('/public/courses', $image_name .".". $extension);
+            $url = Storage::url("courses/". $image_name .".". $extension);
             $attributes['image']=$url;
         }
 
