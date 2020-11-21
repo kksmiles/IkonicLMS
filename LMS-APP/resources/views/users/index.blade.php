@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    Users List
+@endsection
+
 @section('body')
 <div class="p-6 bg-white rounded-md shadow-md">
     <h3 class="text-gray-700 text-2xl font-semibold">Users</h3>
@@ -34,7 +38,7 @@
                     @csrf
                     <input type="hidden" value="1" name="role">
                     <button id="AdminFilter" type="submit" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 focus:outline-none
-                    {{ ($role==1) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
+                    {{ (session('role')==1) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
                         Admins
                     </button>
                 </form>
@@ -42,7 +46,7 @@
                     @csrf
                     <input type="hidden" value="2" name="role">
                     <button type="submit" id="instructorFilter" class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none
-                    {{ ($role==2) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
+                    {{ (session('role')==2) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
                         Instructors
                     </button>
                 </form>
@@ -50,7 +54,7 @@
                     @csrf
                     <input type="hidden" value="3" name="role">
                     <button type="submit" id="learnerFilter" class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none
-                    {{ ($role==3) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
+                    {{ (session('role')==3) ? 'text-indigo-500 border-b-2 font-medium border-indigo-500' : '' }}">
                         Learners
                     </button>
                 </form>
@@ -77,7 +81,9 @@
                                     <img class="h-10 w-10 rounded-full" src="{{ $user->getImageURL() }}" alt="" />
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $user->full_name }}</div>
+                                    <a href="{{ route('users.show', $user->id) }}">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">{{ $user->full_name }}</div>
+                                    </a>
                                     <div class="text-sm leading-5 text-gray-500">{{ $user->email }}</div>
                                 </div>
                             </div>
@@ -134,7 +140,47 @@
 
                         <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                             <a href="{{ route('users.edit', $user->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            
+                            <span x-data="{ open: false }">
+
+                                <a class="ml-3 text-red-600 hover:text-red-900" @click="open = true">Delete</a>
+                                
+                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full" style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                    
+                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-6 md:mx-0" @click.away="open = false">
+                                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                                Delete user
+                                            </h3>
+
+                                            <div class="mt-5">
+                                                <p class="text-sm leading-5 text-gray-500">
+                                                    Are you sure you want to delete {{ $user->full_name }}?
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-5 sm:mt-6">
+                                            <span class="flex flex-row-reverse w-full rounded-md shadow-sm">
+                                                <button onclick="event.preventDefault(); document.getElementById('delete-form{{ $user->id }}').submit();" class="inline-flex justify-center w-2/6 px-4 py-2 text-white bg-red-600 rounded hover:bg-red-900">
+                                                    Delete
+                                                </button>
+                                                <button @click="open = false" class="mr-3 inline-flex justify-center w-2/6 px-4 py-2 text-gray-700">
+                                                    Cancel
+                                                </button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </span>
                         </td>
+                        <form id="delete-form{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" class="hidden">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                        
                     </tr>
                     @endforeach
                 </tbody>
@@ -147,7 +193,7 @@
     </div>
 </div>
 <div class="flex justify-end mt-4">
-    <a href="#" class="px-6 py-3 text-blue-600 hover:text-blue-500 underline">Add to</a>
+    {{-- <a href="#" class="px-6 py-3 text-blue-600 hover:text-blue-500 underline">Add to</a> --}}
     <a href="{{ route('users.create') }}">
         <button class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
             Create new user

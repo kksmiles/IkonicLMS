@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseMaterialTopic;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 
@@ -24,9 +25,10 @@ class CourseMaterialTopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('course-material-topics.create');
+        $course = Course::find($request->course_id);
+        return view('course-material-topics.create', compact('course'));
     }
 
     /**
@@ -41,10 +43,10 @@ class CourseMaterialTopicController extends Controller
             'course_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
             'description' => ['nullable', 'max:255'],
-            'hidden' => ['boolean'],
         ]);
         CourseMaterialTopic::create($attributes);
-        return redirect(route('course-material-topics.index'));
+        $course_id = Course::find($request->course_id);
+        return redirect(route('courses.show', $course_id));
     }
 
     /**
@@ -82,13 +84,11 @@ class CourseMaterialTopicController extends Controller
             'course_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
             'description' => ['nullable', 'max:255'],
-            'hidden' => ['boolean'],
         ]);
 
         $course_material_topic->course_id = $attributes['course_id'];        
         $course_material_topic->title = $attributes['title'];        
-        $course_material_topic->description = $attributes['description'];        
-        $course_material_topic->hidden = $attributes['hidden'];        
+        $course_material_topic->description = $attributes['description'];             
         $course_material_topic->save();
 
         return redirect(route('course-material-topics.index'));

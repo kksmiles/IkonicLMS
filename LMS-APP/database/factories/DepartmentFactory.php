@@ -25,7 +25,6 @@ class DepartmentFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->image,
         ];
     }
 }

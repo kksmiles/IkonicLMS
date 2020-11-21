@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::paginate(8);
         return view('courses.index', compact('courses'));
     }
 
@@ -29,7 +29,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses.create');
+        $departments = \App\Models\Department::all('id', 'name');
+        return view('courses.create', compact('departments'));
     }
 
     /**
@@ -43,9 +44,9 @@ class CourseController extends Controller
         $attributes = $request->validate([
             'department_id' => ['numeric'],
             'title' => ['string', 'required', 'unique:courses', 'max:255'],
-            'description' => ['nullable', 'max:255'],
+            'description' => ['nullable'],
             'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
             'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024']
         ]);
         $current_timestamp = Carbon::now()->timestamp;
@@ -63,7 +64,7 @@ class CourseController extends Controller
         $course_material_topic->title = "Announcements";
         $course_material_topic->hidden = 0;
         $course_material_topic->save();
-        return redirect(route('courses.index'));
+        return redirect(route('courses.index'))->with('success', 'Course created successfully');
     }
 
     /**
@@ -85,7 +86,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('courses.edit', compact('course'));
+        $departments = \App\Models\Department::all('id', 'name');
+        return view('courses.edit', compact('course', 'departments'));
     }
 
     /**
@@ -100,16 +102,18 @@ class CourseController extends Controller
         $attributes = $request->validate([
             'department_id' => ['numeric'],
             'title' => ['string', 'required', Rule::unique('courses')->ignore($course->id), 'max:255'],
-            'description' => ['nullable', 'max:255'],
+            'description' => ['nullable'],
             'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
             'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024']
         ]);
 
+        $current_timestamp = Carbon::now()->timestamp;
         if($request->hasFile('image')) {
+            $image_name = $current_timestamp . "_" . $request->image->getClientOriginalName();
             $extension = $request->image->extension();
-            $request->image->storeAs('/public/courses', $attributes['title'].".".$extension);
-            $url = Storage::url("courses/".$attributes['title'].".".$extension);
+            $request->image->storeAs('/public/courses', $image_name .".". $extension);
+            $url = Storage::url("courses/". $image_name .".". $extension);
             $attributes['image']=$url;
             $course->image = $attributes['image'];
         }
@@ -120,7 +124,7 @@ class CourseController extends Controller
         $course->start_date = $attributes['start_date'];
         $course->end_date = $attributes['end_date'];
         $course->save();
-        return redirect(route('courses.index'));
+        return redirect(route('courses.index'))->with('success', 'Course updated successfully');
     }
 
     /**
@@ -132,6 +136,6 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
-        return redirect(route('courses.index'));
+        return redirect(route('courses.index'))->with('success', 'Course deleted successfully');
     }
 }

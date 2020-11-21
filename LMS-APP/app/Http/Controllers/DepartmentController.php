@@ -18,7 +18,7 @@ class DepartmentController extends Controller
 
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::paginate(8);
         return view('department.index', compact('departments'));
     }
 
@@ -61,7 +61,7 @@ class DepartmentController extends Controller
         }
 
         Department::create($attributes);
-        return redirect(route('departments.index'));
+        return redirect(route('departments.index'))->with('success', 'Department created successfully');
     }
 
 
@@ -120,7 +120,7 @@ class DepartmentController extends Controller
         $department->name = $attributes['name'];
         $department->description = $attributes['description'];
         $department->save();
-        return redirect(route('departments.index'));
+        return redirect(route('departments.index'))->with('success', 'Department updated successfully');
     }
 
 
@@ -135,6 +135,6 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         $department->delete();
-        return redirect(route('departments.index'));
+        return redirect(route('departments.index'))->with('success', 'Department deleted successfully');
     }
 }

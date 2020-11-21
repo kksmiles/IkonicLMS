@@ -25,7 +25,6 @@ class BatchFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->image,
         ];
     }
 }

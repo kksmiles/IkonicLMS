@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseMaterialTopic;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,9 +25,11 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('quizzes.create');
+        $course_material_topics = CourseMaterialTopic::where('course_id', $request->course_id)->get();
+        $current_course_material_topic = CourseMaterialTopic::find($request->topic);
+        return view('quizzes.create', compact('course_material_topics', 'current_course_material_topic'));
     }
 
     /**

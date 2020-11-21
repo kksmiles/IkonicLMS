@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    User create form
+@endsection
+
 @section('body')
 <div class="p-6 bg-white rounded-md shadow-md">
     <h3 class="text-gray-700 text-2xl font-semibold">Users</h3>
@@ -19,27 +23,17 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
                     <div>
                         <label class="text-gray-700" for="fullname">Full Name</label>
-                        <input name="full_name" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text">
+                        <input name="full_name" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" required>
                     </div>
 
                     <div>
                         <label class="text-gray-700" for="username">Username</label>
-                        <input name="username" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text">
+                        <input name="username" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" required>
                     </div>
                     
                     <div>
                         <label class="text-gray-700" for="email">Email Address</label>
-                        <input name="email" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="email">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700" for="password">Password</label>
-                        <input name="password" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="password">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700" for="password">Confirm Password</label>
-                        <input name="password_confirmation" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="password">
+                        <input name="email" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="email" required>
                     </div>
 
                     <div>
@@ -48,13 +42,28 @@
                     </div>
 
                     <div>
+                        <label class="text-gray-700" for="password">Password</label>
+                        <input name="password" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="password" required>
+                        <label class="inline-flex items-center mt-3">
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600">
+                            <span class="ml-2 text-gray-700">Force Password Change</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="text-gray-700" for="password">Confirm Password</label>
+                        <input name="password_confirmation" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="password" required>
+                    </div>
+
+
+                    <div>
                         <label class="text-gray-700" for="image">Image</label>
                         <input name="image" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="file">
                     </div>
 
                     <div class="relative">
                         <label class="text-gray-700" for="role">Role</label>
-                        <select class="form-input w-full mt-2 rounded-md focus:border-indigo-600" name="role" id="role">
+                        <select class="form-input w-full mt-2 rounded-md focus:border-indigo-600" name="role" id="role" required>
                             <option value="1">Admin</option>
                             <option value="2">Instructor</option>
                             <option value="3">Learner</option>
@@ -65,8 +74,13 @@
                             </svg>
                         </div>
                     </div>
-
-                    
+                    <div>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" checked>
+                            <span class="ml-2 text-gray-700">Send account credientials via email</span>
+                        </label>
+                        <br>
+                    </div>
                 </div>
 
                 <div class="flex justify-end mt-4">

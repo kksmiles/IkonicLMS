@@ -1,15 +1,15 @@
 @extends('layouts.master')
 
 @section('title')
-    Departments List
+    Batches List
 @endsection
 
 @section('body')
 <div class="p-6 bg-white rounded-md shadow-md">
-    <h3 class="text-gray-700 text-2xl font-semibold">Departments</h3>
+    <h3 class="text-gray-700 text-2xl font-semibold">Batches</h3>
     <h3 class="text-blue-500 text-md mt-8"> 
         <a href="{{ route('dashboard') }}"> Dashboard </a> /  
-        <a href="{{ route('departments.index') }}"> Departments </a>
+        <a href="{{ route('batches.index') }}"> Batches </a>
     </h3>
 </div>
 
@@ -32,30 +32,29 @@
 
 <div class="flex flex-col mt-8">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <h2 class="text-xl text-gray-700 font-semibold capitalize">List of departments</h2>
+        <h2 class="text-xl text-gray-700 font-semibold capitalize">List of batches</h2>
         <div class="mt-5 align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
             <table class="min-w-full">
                 <thead>
                     <tr>
-                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Department Name</th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Batch Name</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">No. of Courses</th>
-                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">No. of Instructors</th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">No. of Learners</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                     </tr>
                 </thead>
 
                 <tbody class="bg-white">
-                    @foreach($departments as $department)
+                    @foreach($batches as $batch)
                     <tr>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10" src="{{ $department->getImageURL() }}" alt="" />
+                                    <img class="h-10 w-10 rounded-full" src="{{ $batch->getImageURL() }}" alt="" />
                                 </div>
                                 <div class="ml-4">
-                                    <a href="{{ route('departments.show', $department->id) }}">
-                                        <div class="text-sm leading-5 font-medium text-gray-900">{{ $department->name }}</div>
+                                    <a href="{{ route('batches.show', $batch->id) }}">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">{{ $batch->name }}</div>
                                     </a>
                                 </div>
                             </div>
@@ -64,24 +63,18 @@
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             
                             <div class="text-sm leading-5 text-gray-900 truncate w-64">
-                                {{ $department->description }}    
+                                {{ $batch->description }}    
                             </div>
                         </td>
 
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="text-sm leading-5 text-gray-900">
-                                {{ count($department->courses) }}
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                            <div class="text-sm leading-5 text-gray-900">
-                                {{ count($department->instructors) }}
+                                {{ count($batch->learners) }}
                             </div>
                         </td>
 
                         <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                            <a href="{{ route('departments.edit', $department->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <a href="{{ route('batches.edit', $batch->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             
                             <span x-data="{ open: false }">
 
@@ -93,19 +86,19 @@
                                     <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-6 md:mx-0" @click.away="open = false">
                                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                             <h3 class="text-lg font-medium leading-6 text-gray-900">
-                                                Delete Department
+                                                Delete batch
                                             </h3>
 
                                             <div class="mt-5">
                                                 <p class="text-sm leading-5 text-gray-500">
-                                                    Are you sure you want to delete {{ $department->name }}?
+                                                    Are you sure you want to delete {{ $batch->name }}?
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div class="mt-5 sm:mt-6">
                                             <span class="flex flex-row-reverse w-full rounded-md shadow-sm">
-                                                <button onclick="event.preventDefault(); document.getElementById('delete-form{{ $department->id }}').submit();" class="inline-flex justify-center w-2/6 px-4 py-2 text-white bg-red-600 rounded hover:bg-red-900">
+                                                <button onclick="event.preventDefault(); document.getElementById('delete-form{{ $batch->id }}').submit();" class="inline-flex justify-center w-2/6 px-4 py-2 text-white bg-red-600 rounded hover:bg-red-900">
                                                     Delete
                                                 </button>
                                                 <button @click="open = false" class="mr-3 inline-flex justify-center w-2/6 px-4 py-2 text-gray-700">
@@ -118,7 +111,7 @@
                                 </div>
                             </span>
                         </td>
-                        <form id="delete-form{{ $department->id }}" action="{{ route('departments.destroy', $department->id) }}" method="POST" class="hidden">
+                        <form id="delete-form{{ $batch->id }}" action="{{ route('batches.destroy', $batch->id) }}" method="POST" class="hidden">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -128,7 +121,7 @@
                 </tbody>
             </table>
             <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-                {{ $departments->links() }}
+                {{ $batches->links() }}
             </div>
             
         </div>
@@ -136,9 +129,9 @@
 </div>
 <div class="flex justify-end mt-4">
     <a href="#" class="px-6 py-3 text-blue-600 hover:text-blue-500 underline"></a>
-    <a href="{{ route('departments.create') }}">
+    <a href="{{ route('batches.create') }}">
         <button class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
-            Create new department
+            Create new batch
         </button>
     </a>
 </div>

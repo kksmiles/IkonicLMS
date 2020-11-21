@@ -9,35 +9,92 @@
     </div>
 
     <nav class="mt-10">
-        <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="/">
+        @if(!Auth::check())
+        <a class="{{ Route::currentRouteNamed('home') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('home') }}">
             <span class="h-6 w-6">
                 <i class="fas fa-home"></i>
             </span>
             <span class="mx-3">Site Home</span>
         </a>
+        @else
+            @if(Auth::user()->role==1)
+                <a class="{{ Route::currentRouteNamed('home') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('home') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="mx-3">Site Home</span>
+                </a>
 
-        <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/ui-elements">
-            <span class="h-6 w-6">
-                <i class="fas fa-columns"></i>
-            </span>
+                <a class="{{ Route::currentRouteNamed('dashboard') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('dashboard') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-columns"></i>
+                    </span>
 
-            <span class="mx-3">Dashboard</span>
-        </a>
+                    <span class="mx-3">Dashboard</span>
+                </a>
 
-        <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/tables">
-            <span class="h-6 w-6">
-                <i class="fas fa-search"></i>
-            </span>
+                <a class="{{ \Request::is('departments') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('departments.index') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-building"></i>
+                    </span>
 
-            <span class="mx-3">Search</span>
-        </a>
+                    <span class="mx-3">Departments</span>
+                </a>
 
-        <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/forms">
-            <span class="h-6 w-6">
-                <i class="far fa-calendar-alt"></i>
-            </span>
+                <a class="{{ \Request::is('courses') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('courses.index') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-book-open"></i>
+                    </span>
 
-            <span class="mx-3">Calendar</span>
-        </a>
+                    <span class="mx-3">Courses</span>
+                </a>
+                <a class="{{ \Request::is('batches') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('batches.index') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-users-cog"></i>
+                    </span>
+
+                    <span class="mx-3">Batches</span>
+                </a>
+                <a class="{{ \Request::is('users') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('users.index') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-users"></i>
+                    </span>
+
+                    <span class="mx-3">Users</span>
+                </a>
+                @elseif(Auth::user()->role==2 || Auth::user()->role==3 )
+                
+                <a class="{{ Route::currentRouteNamed('home') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('home') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="mx-3">Site Home</span>
+                </a>
+
+                <a class="{{ Route::currentRouteNamed('dashboard') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('dashboard') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-columns"></i>
+                    </span>
+
+                    <span class="mx-3">Dashboard</span>
+                </a>
+
+                <a class="{{ Route::currentRouteNamed('search') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('search') }}">
+                    <span class="h-6 w-6">
+                        <i class="fas fa-search"></i>
+                    </span>
+
+                    <span class="mx-3">Search</span>
+                </a>
+
+                <a class="{{ Route::currentRouteNamed('calendar') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('calendar') }}">
+                    <span class="h-6 w-6">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+
+                    <span class="mx-3">Calendar</span>
+                </a>
+            @endif
+        @endif
     </nav>
 </div>

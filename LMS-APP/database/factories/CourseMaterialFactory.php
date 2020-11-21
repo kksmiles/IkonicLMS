@@ -26,7 +26,7 @@ class CourseMaterialFactory extends Factory
             'course_material_topic_id' => rand(1,5),
             'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'course_material_file' => $this->faker->image,
+            // 'course_material_file' => $this->faker->image,
         ];
     }
 }

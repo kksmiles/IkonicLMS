@@ -19,4 +19,8 @@ class CourseMaterial extends Model
     {
         return $this->hasMany('App\Models\Comment', 'course_material_id', 'id');
     }
+    public function learner_progress()
+    {
+        return $this->belongsToMany('App\Models\User', 'learner_progress', 'course_material_id', 'learner_id')->withPivot('completed');
+    }
 }

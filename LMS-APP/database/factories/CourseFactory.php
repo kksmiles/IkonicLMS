@@ -26,7 +26,6 @@ class CourseFactory extends Factory
             'department_id' => rand(1,3),
             'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'image' => $this->faker->image,
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
         ];

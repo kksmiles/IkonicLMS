@@ -20,4 +20,8 @@ class Department extends Model
     {
         return $this->belongsToMany('App\Models\User', 'instructor_department', 'department_id', 'instructor_id');
     }
+    
+    public function getImageURL() {
+        return $this->image ? $this->image : '/img/department_default.svg';
+    }
 }

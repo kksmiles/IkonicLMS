@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseMaterialTopic;
 use App\Models\Assignment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -24,9 +25,11 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('assignments.create');
+        $course_material_topics = CourseMaterialTopic::where('course_id', $request->course_id)->get();
+        $current_course_material_topic = CourseMaterialTopic::find($request->topic);
+        return view('assignments.create', compact('course_material_topics', 'current_course_material_topic'));
     }
 
     /**

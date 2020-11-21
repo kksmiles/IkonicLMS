@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="referrer" content="always">
 
-        <title></title>
+        <title>@yield('title')</title>
         
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <script src="https://kit.fontawesome.com/ac2748b2eb.js" crossorigin="anonymous"></script>

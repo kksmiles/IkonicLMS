@@ -26,7 +26,7 @@ class AssignmentFactory extends Factory
             'course_material_topic_id' => rand(1,5),
             'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
-            'assignment_file' => $this->faker->image,
+            // 'assignment_file' => $this->faker->image,
             'full_grade' => $this->faker->randomFloat(2, 5, 20),
             'due_date' => $this->faker->date,
         ];

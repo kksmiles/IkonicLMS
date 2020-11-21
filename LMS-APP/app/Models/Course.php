@@ -31,4 +31,7 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\ClassPeriod', 'course_id', 'id');
     }
+    public function getImageURL() {
+        return $this->image ? $this->image : '/img/course-default.svg';
+    }
 }

@@ -15,4 +15,7 @@ class Batch extends Model
     {
         return $this->belongsToMany('App\Models\User', 'learner_batch', 'batch_id', 'learner_id');
     }
+    public function getImageURL() {
+        return $this->image ? $this->image : '/img/batch-default.svg';
+    }
 }

@@ -1,59 +1,58 @@
 @extends('layouts.master')
 
 @section('title')
-    User Edit Form
+    Batch create form
 @endsection
 
 @section('body')
 <div class="p-6 bg-white rounded-md shadow-md">
-    <h3 class="text-gray-700 text-2xl font-semibold">Users</h3>
+    <h3 class="text-gray-700 text-2xl font-semibold">Batches</h3>
     <h3 class="text-blue-500 text-md mt-8"> 
         <a href="{{ route('dashboard') }}"> Dashboard </a> /  
-        <a href="{{ route('users.index') }}"> Users </a> / 
-        Edit a user
+        <a href="{{ route('batches.index') }}"> Batches </a> / 
+        <a href="{{ route('batches.create') }}"> Add a new batch </a> 
     </h3>
 </div>
 <div class="mt-8">
     <div class="mt-4">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="text-xl text-gray-700 font-semibold capitalize">Edit a user</h2>
-
-            <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+            <h2 class="text-xl text-gray-700 font-semibold capitalize">Add a new batch</h2>
+            
+            <form action="{{ route('batches.update', $batch->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
                     <div>
-                        <label class="text-gray-700" for="fullname">Full Name</label>
-                        <input name="full_name" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" value="{{ $user->full_name }}" type="text">
+                        <label class="text-gray-700" for="fullname">Name</label>
+                        <input name="name" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" value="{{ $batch->name }}" required>
                     </div>
-                    <div>
-                        <label class="text-gray-700" for="email">Email Address</label>
-                        <input name="email" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" value="{{ $user->email }}" type="email">
-                    </div>
-
-                    <div>
-                        <label class="text-gray-700" for="phone">Phone Number</label>
-                        <input name="phone" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" value="{{ $user->phone }}" type="text">
-                    </div>
+                  
 
                     <div>
                         <label class="text-gray-700" for="image">Image</label>
                         <input name="image" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="file">
                     </div>
 
+
+                    <div>
+                        <label class="text-gray-700" for="batchname">Description</label>
+                        <textarea name="description" id="" rows="5" class="form-input w-full mt-2 rounded-md focus:border-indigo-600">
+                            {{ $batch->description }}
+                        </textarea>
+                    </div>
+
                     
                 </div>
 
-                
                 <div class="flex justify-end mt-4">
                     <a class="px-6 py-3" href="{{ url()->previous() }}">
                         Cancel                        
                     </a>
                     <button type="submit" class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
-                        Update user
+                        Update batch
                     </button>
                 </div>
-            </form>         
+            </form>
         </div>
     </div>
 </div>

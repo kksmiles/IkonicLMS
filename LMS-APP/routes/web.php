@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::resource('users', 'UserController');
+Route::resource('batches', 'BatchController');
 Route::resource('departments', 'DepartmentController');
 Route::resource('courses', 'CourseController');
 Route::resource('course-material-topics', 'CourseMaterialTopicController');
@@ -14,15 +15,18 @@ Route::resource('options', 'OptionController');
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 Route::get('/dashboard', function () {
-    return view('welcome');
-})->name('dashboard');
-Route::get('/test', function () {
     return view('test');
-});
+})->name('dashboard');
+Route::get('/search', function () {
+    return view('test');
+})->name('search');
+Route::get('/calendar', function () {
+    return view('test');
+})->name('calendar');
 
 Route::get('/home', function(){
     return view('home');
-});
+})->name('home');

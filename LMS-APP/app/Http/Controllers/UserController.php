@@ -16,17 +16,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth')->except('show');
+    // }
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show');   
+        $this->authorizeResource(User::class, 'user');
+    }
     public function index(Request $request)
     {
         if($request->has('role'))
         {
-            $users = User::where('role', $request->role)->paginate(8);
+            session(['role' => $request->role]);
+            $users = User::where('role', session('role'))->paginate(8);
         }
-        else {
-            $request->role = 1;
-            $users = User::where('role', $request->role)->paginate(8);
+        else if(session('role')) {
+            $users = User::where('role', session('role'))->paginate(8);
+        } else {
+            session(['role' => 1]);
+            $users = User::where('role', session('role'))->paginate(8);
         }
-        return view('users.index')->with('users', $users)->with('role', $request->role);
+        return view('users.index')->with('users', $users);
     }
 
     /**
@@ -73,23 +86,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
         return view('users.edit', compact('user'));
     }
 
@@ -97,14 +109,12 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
         $attributes = $request->validate([
-            'role' => ['numeric'],
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:255'],
@@ -119,7 +129,6 @@ class UserController extends Controller
             $attributes['image']=$url;
             $user->image = $attributes['image'];
         }
-        $user->role = $attributes['role'];
         $user->full_name = $attributes['full_name'];
         $user->email = $attributes['email'];
         $user->phone = $attributes['phone'];
@@ -130,11 +139,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect(route('users.index'))->with('success', 'User deleted successfully');
     }
 }

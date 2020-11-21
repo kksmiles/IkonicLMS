@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseMaterial;
+use App\Models\CourseMaterialTopic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,9 +26,11 @@ class CourseMaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('course-materials.create');
+        $course_material_topics = CourseMaterialTopic::where('course_id', $request->course_id)->get();
+        $current_course_material_topic = CourseMaterialTopic::find($request->topic);
+        return view('course-materials.create', compact('course_material_topics', 'current_course_material_topic'));
     }
 
     /**
@@ -54,7 +57,8 @@ class CourseMaterialController extends Controller
         }
 
         CourseMaterial::create($attributes);
-        return redirect(route('course-materials.index'));
+        $course_id = CourseMaterialTopic::find($request->course_material_topic_id)->course_id;
+        return redirect(route('courses.show', $course_id));
     }
 
     /**
@@ -76,7 +80,8 @@ class CourseMaterialController extends Controller
      */
     public function edit(CourseMaterial $course_material)
     {
-        return view('course-materials.edit', compact('course_material'));
+        $course_material_topics = CourseMaterialTopic::where('course_id', $course_material->course_material_topic->course->id)->get();
+        return view('course-materials.edit', compact('course_material', 'course_material_topics'));
         
     }
 
@@ -121,7 +126,8 @@ class CourseMaterialController extends Controller
      */
     public function destroy(CourseMaterial $course_material)
     {
+        $course_id = $course_material->course_material_topic->course->id;
         $course_material->delete();
-        return redirect(route('course-materials.index'));
+        return redirect(route('courses.show', $course_id));
     }
 }

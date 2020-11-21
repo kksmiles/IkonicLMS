@@ -103,8 +103,8 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::emailVerification(),
+        // Features::registration(),
+        // Features::emailVerification(),
     ],
 
 ];
