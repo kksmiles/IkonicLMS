@@ -5,6 +5,7 @@
 @endsection
 
 @section('body')
+
 <div class="p-6 bg-white rounded-md shadow-md">
     <h3 class="text-gray-700 text-2xl font-semibold">Courses</h3>
     <h3 class="text-blue-500 text-md mt-8"> 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseMaterialsTable extends Migration
+class CreateSiteDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCourseMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_materials', function (Blueprint $table) {
+        Schema::create('site_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_material_topic_id')->constrained('course_material_topics')->onDelete('cascade');
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('course_material_file')->nullable();
-            $table->string('file_type')->nullable();
+            $table->string('file');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateCourseMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_materials');
+        Schema::dropIfExists('site_data');
     }
 }

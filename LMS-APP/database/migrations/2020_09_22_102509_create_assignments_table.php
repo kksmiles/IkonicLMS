@@ -20,7 +20,7 @@ class CreateAssignmentsTable extends Migration
             $table->text('description')->nullable();
             $table->string('assignment_file')->nullable();
             $table->float('full_grade');
-            $table->dateTime('due_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }

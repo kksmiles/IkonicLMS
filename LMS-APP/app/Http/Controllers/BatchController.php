@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class BatchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(Batch::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -118,5 +124,24 @@ class BatchController extends Controller
     {
         $batch->delete();
         return redirect(route('batches.index'))->with('success', 'Batch deleted successfully');
+    }
+
+    public function removeUser(Request $request)
+    {
+        User::find($request['learner_id'])->batches()->detach($request['batch_id']);
+        return redirect(route('batches.show', $request['batch_id']))->with('success', 'User removed successfully');
+    }
+
+    public function addUser($id)
+    {
+        $batch = Batch::findOrFail($id);
+        $users = User::where('role', 3)->get();
+        return view('batches.add-user', compact('batch', 'users'));
+    }
+    public function storeUser(Request $request)
+    {
+        $batch = Batch::find($request['batch_id']);
+        $batch->learners()->sync($request['users']);
+        return redirect(route('batches.show', $request['batch_id']))->with('success', 'Users enrolled successfully');
     }
 }

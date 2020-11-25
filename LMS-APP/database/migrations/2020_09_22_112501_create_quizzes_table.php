@@ -16,7 +16,7 @@ class CreateQuizzesTable extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained('courses')->onDelete('Cascade');
+            $table->foreignId('course_material_topic_id')->constrained('course_material_topics')->onDelete('Cascade');
             $table->string('title');
             $table->text('description')->nullable();
             $table->dateTime('due_date');

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class CourseMaterialTopicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(CourseMaterialTopic::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -81,17 +86,16 @@ class CourseMaterialTopicController extends Controller
     public function update(Request $request, CourseMaterialTopic $course_material_topic)
     {
         $attributes = $request->validate([
-            'course_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
             'description' => ['nullable', 'max:255'],
         ]);
-
-        $course_material_topic->course_id = $attributes['course_id'];        
+     
         $course_material_topic->title = $attributes['title'];        
         $course_material_topic->description = $attributes['description'];             
         $course_material_topic->save();
 
-        return redirect(route('course-material-topics.index'));
+        $course_id = Course::find($course_material_topic->course_id);
+        return redirect(route('courses.show', $course_id));
     }
 
     /**

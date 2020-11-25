@@ -5,43 +5,24 @@
 @endsection
 
 @section('body')
-<div class="p-6 bg-white rounded-md shadow-md">
-    <h3 class="text-gray-700 text-2xl font-semibold">Courses</h3>
-    <h3 class="text-blue-500 text-md mt-8"> 
-        <a href="{{ route('dashboard') }}"> Dashboard </a> / 
-        @if(Auth::user()->role==1)
-            <a href="{{ route('courses.index') }}"> Courses </a> /
-        @endif
-        <a href="{{ route('courses.show', $course->id) }}"> 
-            {{ $course->title }} 
-        </a> / 
-        <a href="#">
-            Add new topic
-        </a>
 
-    </h3>
-</div>
 <div class="mt-8">
     <div class="mt-4">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="text-xl text-gray-700 font-semibold capitalize">Add new topic</h2>
+            <h2 class="text-xl text-gray-700 font-semibold capitalize">Add a new course material</h2>
             
-            <form action="{{ route('course-material-topics.store') }}" method="POST">
+            <form action="{{ route('site-datas.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
-
                     <div>
-                        <input type="hidden" name="course_id" value="{{ $course->id }}">
                         <label class="text-gray-700" for="title">Title</label>
                         <input name="title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" required>
                     </div>
-                  
 
                     <div>
-                        <label class="text-gray-700" for="description">Description</label>
-                        <textarea name="description" id="" rows="5" class="form-input w-full mt-2 rounded-md focus:border-indigo-600"></textarea>
-                    </div>
-                
+                        <label class="text-gray-700" for="course_material_file">File</label>
+                        <input name="file" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="file">
+                    </div>                    
                 </div>
 
                 <div class="flex justify-end mt-4">
@@ -49,7 +30,7 @@
                         Cancel                        
                     </a>
                     <button type="submit" class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
-                        Add new topic
+                        Add new announcement
                     </button>
                 </div>
             </form>

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\CourseMaterial;
+use App\Models\CourseMaterialTopic;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CourseMaterialPolicy
+class CourseMaterialTopicPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class CourseMaterialPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CourseMaterial  $courseMaterial
+     * @param  \App\Models\CourseMaterialTopic  $courseMaterialTopic
      * @return mixed
      */
-    public function view(User $user, CourseMaterial $courseMaterial)
-    {   
-        $course_id = $courseMaterial->course_material_topic->course->id;
+    public function view(User $user, CourseMaterialTopic $courseMaterialTopic)
+    {
+        $course_id = $courseMaterialTopic->course->id;
         if($user->role==1) {
             return true;
         } else if($user->role==2) {
@@ -61,10 +61,10 @@ class CourseMaterialPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CourseMaterial  $courseMaterial
+     * @param  \App\Models\CourseMaterialTopic  $courseMaterialTopic
      * @return mixed
      */
-    public function update(User $user, CourseMaterial $courseMaterial)
+    public function update(User $user, CourseMaterialTopic $courseMaterialTopic)
     {
         if($user->role==1) {
             return true;
@@ -79,10 +79,10 @@ class CourseMaterialPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CourseMaterial  $courseMaterial
+     * @param  \App\Models\CourseMaterialTopic  $courseMaterialTopic
      * @return mixed
      */
-    public function delete(User $user, CourseMaterial $courseMaterial)
+    public function delete(User $user, CourseMaterialTopic $courseMaterialTopic)
     {
         if($user->role==1) {
             return true;
@@ -97,10 +97,10 @@ class CourseMaterialPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CourseMaterial  $courseMaterial
+     * @param  \App\Models\CourseMaterialTopic  $courseMaterialTopic
      * @return mixed
      */
-    public function restore(User $user, CourseMaterial $courseMaterial)
+    public function restore(User $user, CourseMaterialTopic $courseMaterialTopic)
     {
         if($user->role==1) {
             return true;
@@ -115,10 +115,10 @@ class CourseMaterialPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CourseMaterial  $courseMaterial
+     * @param  \App\Models\CourseMaterialTopic  $courseMaterialTopic
      * @return mixed
      */
-    public function forceDelete(User $user, CourseMaterial $courseMaterial)
+    public function forceDelete(User $user, CourseMaterialTopic $courseMaterialTopic)
     {
         if($user->role==1) {
             return true;

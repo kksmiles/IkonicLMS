@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Course;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CoursePolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class CoursePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role==1;
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function view(User $user, Course $course)
+    public function view(User $user, Comment $comment)
     {
-        return true;
+        //
     }
 
     /**
@@ -41,60 +41,54 @@ class CoursePolicy
      */
     public function create(User $user)
     {
-        return $user->role == 1;
+        
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function update(User $user, Course $course)
+    public function update(User $user, Comment $comment)
     {
-        if($user->role==1) {
-            return true;
-        } else if($user->role==2) {
-            return !((count($user->instructor_courses->where('id', $course->id)))==0);
-        } else {
-            return false;
-        }
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function delete(User $user, Course $course)
+    public function delete(User $user, Comment $comment)
     {
-        return $user->role == 1;
+        return $user->id == $comment->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function restore(User $user, Course $course)
+    public function restore(User $user, Comment $comment)
     {
-        return $user->role == 1;
+        return $user->id == $comment->user_id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function forceDelete(User $user, Course $course)
+    public function forceDelete(User $user, Comment $comment)
     {
-        return $user->role == 1;
+        return $user->id == $comment->user_id;
     }
 }

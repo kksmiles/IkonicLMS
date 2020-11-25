@@ -7,7 +7,7 @@
         <meta name="referrer" content="always">
 
         <title>@yield('title')</title>
-        
+        <style>@yield('style')</style>
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <script src="https://kit.fontawesome.com/ac2748b2eb.js" crossorigin="anonymous"></script>
         <script src="{{ asset('js/main.js') }}"></script>

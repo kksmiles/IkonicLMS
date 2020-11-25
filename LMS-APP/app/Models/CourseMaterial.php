@@ -23,4 +23,7 @@ class CourseMaterial extends Model
     {
         return $this->belongsToMany('App\Models\User', 'learner_progress', 'course_material_id', 'learner_id')->withPivot('completed');
     }
+    public function getFileURL() {
+        return $this->course_material_file ? $this->course_material_file : '/img/empty-file.svg';
+    }
 }

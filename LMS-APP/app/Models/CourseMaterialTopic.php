@@ -24,4 +24,8 @@ class CourseMaterialTopic extends Model
     {
         return $this->hasMany('App\Models\Assignment', 'course_material_topic_id', 'id');
     }
+    public function quizzes()
+    {
+        return $this->hasMany('App\Models\Quiz', 'course_material_topic_id', 'id');
+    }
 }

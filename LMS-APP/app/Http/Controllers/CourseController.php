@@ -11,11 +11,22 @@ use Carbon\Carbon;
 
 class CourseController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(Course::class);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function home()
+    {
+        return view('home');
+    }
+
     public function index()
     {
         $courses = Course::paginate(8);

@@ -14,6 +14,13 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(Assignment::class);
+    }
+
     public function index()
     {
         $assignments = Assignment::all();
@@ -58,7 +65,8 @@ class AssignmentController extends Controller
         }
 
         Assignment::create($attributes);
-        return redirect(route('assignments.index'));
+        $course_id = CourseMaterialTopic::find($request->course_material_topic_id)->course_id;
+        return redirect(route('courses.show', $course_id));
     }
 
     /**
@@ -93,7 +101,6 @@ class AssignmentController extends Controller
     public function update(Request $request, Assignment $assignment)
     {
         $attributes = $request->validate([
-            'course_material_topic_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
             'description' => ['nullable', 'max:255'],
             'full_grade' => ['required', 'numeric'],
@@ -110,13 +117,13 @@ class AssignmentController extends Controller
             $assignment->assignment_file = $attributes['assignment_file'];
         }
 
-        $assignment->course_material_topic_id = $attributes['course_material_topic_id'];
         $assignment->title = $attributes['title'];
         $assignment->description = $attributes['description'];
         $assignment->full_grade = $attributes['full_grade'];
         $assignment->due_date = $attributes['due_date'];
         $assignment->save();
-        return redirect(route('assignments.index'));
+        $course_id = CourseMaterialTopic::find($assignment->course_material_topic_id)->course_id;
+        return redirect(route('courses.show', $course_id));
     }
 
     /**
@@ -127,7 +134,8 @@ class AssignmentController extends Controller
      */
     public function destroy(Assignment $assignment)
     {
+        $course_id = CourseMaterialTopic::find($assignment->course_material_topic_id)->course_id;
         $assignment->delete();
-        return redirect(route('assignments.index'));
+        return redirect(route('courses.show', $course_id));
     }
 }

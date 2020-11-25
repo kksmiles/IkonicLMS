@@ -6,15 +6,23 @@ use App\Models\CourseMaterial;
 use App\Models\CourseMaterialTopic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 
 class CourseMaterialController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(CourseMaterial::class);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $course_materials = CourseMaterial::all();
@@ -44,13 +52,14 @@ class CourseMaterialController extends Controller
         $attributes = $request->validate([
             'course_material_topic_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
-            'description' => ['nullable', 'max:255'],
-            'course_material_file' => ['nullable', 'mimes:pdf,ppt,mp4,3GP,OGG']
+            'description' => ['nullable'],
+            'course_material_file' => ['nullable', 'mimes:pdf,ppt,mp4,3GP,OGG,zip,mkv']
         ]);
 
         if($request->hasFile('course_material_file')) {
             $current_time = \Carbon\Carbon::now()->timestamp;
             $extension = $request->course_material_file->extension();
+            $attributes['file_type']=$extension;
             $request->course_material_file->storeAs('/public/course-materials', $current_time."".$attributes['title'].".".$extension);
             $url = Storage::url("course-materials/".$current_time."".$attributes['title'].".".$extension);
             $attributes['course_material_file']=$url;
@@ -97,17 +106,19 @@ class CourseMaterialController extends Controller
         $attributes = $request->validate([
             'course_material_topic_id' => ['numeric'],
             'title' => ['string', 'required', 'max:255'],
-            'description' => ['nullable', 'max:255'],
-            'course_material_file' => ['nullable', 'mimes:pdf,ppt,mp4,3GP,OGG']
+            'description' => ['nullable'],
+            'course_material_file' => ['nullable', 'mimes:pdf,ppt,mp4,3GP,OGG,zip,mkv']
         ]);
 
         if($request->hasFile('course_material_file')) {
             $current_time = \Carbon\Carbon::now()->timestamp;
             $extension = $request->course_material_file->extension();
+            $attributes['file_type']=$extension;
             $request->course_material_file->storeAs('/public/course-materials', $current_time."".$attributes['title'].".".$extension);
             $url = Storage::url("course-materials/".$current_time."".$attributes['title'].".".$extension);
             $attributes['course_material_file']=$url;
             $course_material->image = $attributes['course_material_file'];
+            $course_material->file_type = $attributes['file_type'];
         }
 
         $course_material->course_material_topic_id = $attributes['course_material_topic_id'];        
@@ -128,6 +139,22 @@ class CourseMaterialController extends Controller
     {
         $course_id = $course_material->course_material_topic->course->id;
         $course_material->delete();
+        return redirect(route('courses.show', $course_id));
+    }
+
+    public function check($id)
+    {
+        $course_material = CourseMaterial::find($id);
+        $course_id = $course_material->course_material_topic->course->id;
+        Auth::user()->learner_progress()->attach([$id => ['completed' => 1]]);
+        return redirect(route('courses.show', $course_id));
+    }
+
+    public function unCheck($id)
+    {
+        $course_material = CourseMaterial::find($id);
+        $course_id = $course_material->course_material_topic->course->id;
+        Auth::user()->learner_progress()->detach($id);
         return redirect(route('courses.show', $course_id));
     }
 }

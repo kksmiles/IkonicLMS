@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+        $this->authorizeResource(Department::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -136,5 +142,24 @@ class DepartmentController extends Controller
     {
         $department->delete();
         return redirect(route('departments.index'))->with('success', 'Department deleted successfully');
+    }
+
+    public function removeUser(Request $request)
+    {
+        User::find($request['instructor_id'])->departments()->detach($request['department_id']);
+        return redirect(route('departments.show', $request['department_id']))->with('success', 'User removed successfully');
+    }
+
+    public function addUser($id)
+    {
+        $department = Department::findOrFail($id);
+        $users = User::where('role', 2)->get();
+        return view('department.add-user', compact('department', 'users'));
+    }
+    public function storeUser(Request $request)
+    {
+        $department = Department::find($request['department_id']);
+        $department->instructors()->sync($request['users']);
+        return redirect(route('departments.show', $request['department_id']))->with('success', 'User enrolled successfully');
     }
 }

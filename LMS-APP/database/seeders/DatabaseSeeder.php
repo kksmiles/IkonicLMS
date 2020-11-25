@@ -352,21 +352,43 @@ class DatabaseSeeder extends Seeder
             'hidden' => 0,
         ]);
         DB::table('course_material_topics')->insert([
+            'course_id' => '4',
+            'title' => 'Announcements',
+            'hidden' => 0,
+        ]);
+        DB::table('course_material_topics')->insert([
+            'course_id' => '5',
+            'title' => 'Announcements',
+            'hidden' => 0,
+        ]);
+        DB::table('course_material_topics')->insert([
+            'course_id' => '6',
+            'title' => 'Announcements',
+            'hidden' => 0,
+        ]);
+        DB::table('course_material_topics')->insert([
+            'course_id' => '7',
+            'title' => 'Announcements',
+            'hidden' => 0,
+        ]);
+        DB::table('course_material_topics')->insert([
             'course_id' => '1',
             'title' => 'Week 1',
             'hidden' => 0,
         ]);
         DB::table('course_materials')->insert([
-            'course_material_topic_id' => '4',
+            'course_material_topic_id' => '8',
             'title' => 'Introduction to Games',
             'description' => 'Introduction to games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'course_material_file' => '/course-materials/material1.mp4',
+            'course_material_file' => '/storage/course-materials/sample-video-1.mp4',
+            'file_type' => 'mkv'
         ]);
         DB::table('course_materials')->insert([
-            'course_material_topic_id' => '4',
+            'course_material_topic_id' => '8',
             'title' => 'Introduction to Games',
             'description' => 'Introduction to games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'course_material_file' => '/course-materials/material1.pdf',
+            'course_material_file' => '/storage/course-materials/material1.pdf',
+            'file_type' => 'pdf'
         ]);
 
     }

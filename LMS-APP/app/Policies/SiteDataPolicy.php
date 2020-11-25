@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Course;
+use App\Models\SiteData;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CoursePolicy
+class SiteDataPolicy
 {
     use HandlesAuthorization;
 
@@ -18,17 +18,17 @@ class CoursePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role==1;
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\SiteData  $siteData
      * @return mixed
      */
-    public function view(User $user, Course $course)
+    public function view(User $user, SiteData $siteData)
     {
         return true;
     }
@@ -48,28 +48,22 @@ class CoursePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\SiteData  $siteData
      * @return mixed
      */
-    public function update(User $user, Course $course)
+    public function update(User $user, SiteData $siteData)
     {
-        if($user->role==1) {
-            return true;
-        } else if($user->role==2) {
-            return !((count($user->instructor_courses->where('id', $course->id)))==0);
-        } else {
-            return false;
-        }
+        return $user->role == 1;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\SiteData  $siteData
      * @return mixed
      */
-    public function delete(User $user, Course $course)
+    public function delete(User $user, SiteData $siteData)
     {
         return $user->role == 1;
     }
@@ -78,10 +72,10 @@ class CoursePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\SiteData  $siteData
      * @return mixed
      */
-    public function restore(User $user, Course $course)
+    public function restore(User $user, SiteData $siteData)
     {
         return $user->role == 1;
     }
@@ -90,10 +84,10 @@ class CoursePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\SiteData  $siteData
      * @return mixed
      */
-    public function forceDelete(User $user, Course $course)
+    public function forceDelete(User $user, SiteData $siteData)
     {
         return $user->role == 1;
     }

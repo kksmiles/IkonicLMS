@@ -17,14 +17,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth')->except('show');
-    // }
     public function __construct()
     {
         $this->middleware('auth')->except('show');   
-        $this->authorizeResource(User::class, 'user');
+        $this->authorizeResource(User::class);
     }
     public function index(Request $request)
     {
