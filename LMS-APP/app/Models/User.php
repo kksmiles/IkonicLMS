@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -48,6 +49,15 @@ class User extends Authenticatable
     public function learner_progress()
     {
         return $this->belongsToMany('App\Models\CourseMaterial', 'learner_progress', 'learner_id', 'course_material_id')->withPivot('completed');
+    }
+    public function dashboard_courses()
+    {
+        if(Auth::user()->role==2)
+        {
+            return $this->belongsToMany('App\Models\Course', 'instructor_course', 'instructor_id', 'course_id');
+        } else if (Auth::user()->role==3) {
+            return $this->belongsToMany('App\Models\Course', 'learner_course', 'learner_id', 'course_id')->withPivot('grades');
+        }
     }
     public function instructor_courses()
     {

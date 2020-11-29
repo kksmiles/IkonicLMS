@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '2',
@@ -40,6 +42,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user2.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '2',
@@ -49,6 +53,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user3.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '2',
@@ -58,6 +64,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user4.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '2',
@@ -67,6 +75,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user5.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '3',
@@ -76,6 +86,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user1.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '3',
@@ -85,6 +97,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user6.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('users')->insert([
             'role' => '3',
@@ -94,6 +108,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'image' => '/storage/profiles/user7.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         
 
@@ -106,11 +122,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'franchisnaruto@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
         DB::table('departments')->insert([
             'name' => 'Department of Computer Science',
             'description' => 'Department of Computer Science Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'image' => '/storage/departments/department1.jpeg',
+                        'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('departments')->insert([
@@ -158,7 +178,9 @@ class DatabaseSeeder extends Seeder
             'description' => 'CS-42702 : Enterprise Management System is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'start_date' => '2020-10-11',
             'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course2.jpeg'
+            'image' => '/storage/courses/course2.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('courses')->insert([
@@ -167,7 +189,9 @@ class DatabaseSeeder extends Seeder
             'description' => 'CS-42703 : Software Evolution is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'start_date' => '2020-10-11',
             'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course3.jpeg'
+            'image' => '/storage/courses/course3.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('courses')->insert([
@@ -176,7 +200,9 @@ class DatabaseSeeder extends Seeder
             'description' => 'CS-42704 : Software Testing is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'start_date' => '2020-10-11',
             'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course4.jpeg'
+            'image' => '/storage/courses/course4.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('courses')->insert([
@@ -185,25 +211,31 @@ class DatabaseSeeder extends Seeder
             'description' => 'CS-43204 : Data Engineering is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'start_date' => '2020-10-11',
             'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course5.jpeg'
+            'image' => '/storage/courses/course5.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('courses')->insert([
             'department_id' => '3',
             'title' => 'CS-43205 : Data Science',
             'description' => 'CS-43205 : Data Science is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'start_date' => '2020-10-11',
-            'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course6.jpeg'
+            'start_date' => '2019-10-11',
+            'end_date' => '2020-03-21',
+            'image' => '/storage/courses/course6.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('courses')->insert([
             'department_id' => '2',
             'title' => 'CS-4220 : Mobile Developement',
             'description' => 'CS-4220 : Mobile Developement is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'start_date' => '2020-10-11',
-            'end_date' => '2021-03-21',
-            'image' => '/storage/courses/course7.jpeg'
+            'start_date' => '2021-10-11',
+            'end_date' => '2022-03-21',
+            'image' => '/storage/courses/course7.jpeg',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
         ]);
 
         DB::table('instructor_department')->insert([
@@ -336,6 +368,96 @@ class DatabaseSeeder extends Seeder
             'instructor_id' => '2',
             'course_id' => '7',
         ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '6',
+            'course_id' => '1',
+            'grades' => '80',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '7',
+            'course_id' => '1',
+            'grades' => '85',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '1',
+            'grades' => '65',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '2',
+            'grades' => '75',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '3',
+            'grades' => '85',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '4',
+            'grades' => '85',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '5',
+            'grades' => '85',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '6',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '8',
+            'course_id' => '7',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '9',
+            'course_id' => '1',
+            'grades' => '75',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '10',
+            'course_id' => '1',
+            'grades' => '75',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '11',
+            'course_id' => '1',
+            'grades' => '75',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+        DB::table('learner_course')->insert([
+            'learner_id' => '12',
+            'course_id' => '1',
+            'grades' => '75',
+            'created_at' => "2020-11-01 03:28:50.000000",
+            'updated_at' => "2020-11-01 03:28:50.000000",
+        ]);
+
         DB::table('course_material_topics')->insert([
             'course_id' => '1',
             'title' => 'Announcements',
@@ -376,6 +498,11 @@ class DatabaseSeeder extends Seeder
             'title' => 'Week 1',
             'hidden' => 0,
         ]);
+        DB::table('course_material_topics')->insert([
+            'course_id' => '1',
+            'title' => 'Week 2',
+            'hidden' => 0,
+        ]);
         DB::table('course_materials')->insert([
             'course_material_topic_id' => '8',
             'title' => 'Introduction to Games',
@@ -389,6 +516,67 @@ class DatabaseSeeder extends Seeder
             'description' => 'Introduction to games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'course_material_file' => '/storage/course-materials/material1.pdf',
             'file_type' => 'pdf'
+        ]);
+        DB::table('course_materials')->insert([
+            'course_material_topic_id' => '8',
+            'title' => 'Zero-sum games',
+            'description' => 'Zero-sum games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'course_material_file' => '/storage/course-materials/material1.pdf',
+            'file_type' => 'pdf'
+        ]);
+        DB::table('course_materials')->insert([
+            'course_material_topic_id' => '8',
+            'title' => 'Zero-sum games',
+            'description' => 'Zero-sum games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'course_material_file' => '/storage/course-materials/sample-video-1.mp4',
+            'file_type' => 'mkv'
+        ]);
+        DB::table('course_materials')->insert([
+            'course_material_topic_id' => '9',
+            'title' => 'Variable games',
+            'description' => 'Variable games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'course_material_file' => '/storage/course-materials/material1.pdf',
+            'file_type' => 'pdf'
+        ]);
+        DB::table('course_materials')->insert([
+            'course_material_topic_id' => '9',
+            'title' => 'Variable games',
+            'description' => 'Variable games Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'course_material_file' => '/storage/course-materials/sample-video-1.mp4',
+            'file_type' => 'mkv'
+        ]);
+
+        DB::table('assignments')->insert([
+            'course_material_topic_id' => '8',
+            'title' => 'Week 1 Assignment',
+            'description' => 'What is zero-sum game? Give an example',
+            'assignment_file' => '/storage/assignments/assignment1.pdf',
+            'full_grade' => '20',
+            'due_date' => '2020-12-01'
+        ]);
+        DB::table('assignments')->insert([
+            'course_material_topic_id' => '8',
+            'title' => 'Week 1 Assignment 2',
+            'description' => 'Reflection on this week',
+            'assignment_file' => '/storage/assignments/assignment1.pdf',
+            'full_grade' => '20',
+            'due_date' => '2020-11-30'
+        ]);
+        DB::table('assignments')->insert([
+            'course_material_topic_id' => '9',
+            'title' => 'Week 2 Assignment',
+            'description' => 'What is variable game? Give an example',
+            'assignment_file' => '/storage/assignments/assignment2.pdf',
+            'full_grade' => '15',
+            'due_date' => '2020-12-05'
+        ]);
+        DB::table('site_data')->insert([
+            'title' => 'Academic Rules',
+            'file' => '/storage/site-datas/site-data1.pdf'
+        ]);
+        DB::table('site_data')->insert([
+            'title' => 'How to use IkonicLMS',
+            'file' => '/storage/site-datas/site-data2.pdf'
         ]);
 
     }

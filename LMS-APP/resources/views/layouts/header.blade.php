@@ -13,8 +13,12 @@
                 </span>
             </span>
 
-            <input class="form-input w-32 sm:w-64 md:w-64 lg:w-auto xl:w-auto rounded-md pl-10 pr-4 focus:border-indigo-600" type="text" placeholder="Search for courses and users">
-            {{-- <button class="px-4 py-2 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3 invisible sm:invisible md:invisible lg:visible xl:visible">Search</button> --}}
+            
+            <form action="{{ route('search') }}">
+                @csrf
+                <input name="search" class="form-input w-32 sm:w-64 md:w-64 lg:w-auto xl:w-auto rounded-md pl-10 pr-4 focus:border-indigo-600" type="text" placeholder="Search for courses and users">
+                <button type="submit" class="px-4 py-2 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">Search</button>
+            </form>
         </div>
     </div>
     
@@ -28,7 +32,9 @@
                 <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
                 <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
                     <a href="{{ route('users.show', Auth::id()) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
+                    @if(Auth::user()->role == 3)
                     <a href="{{ route('gradebook') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Gradebook</a>
+                    @endif
                     <hr>
                     <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 </div>

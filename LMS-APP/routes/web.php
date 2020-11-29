@@ -45,12 +45,8 @@ Route::resource('site-datas', 'SiteDataController');
 
 
 
-Route::get('/search', function () {
-    return view('test');
-})->name('search');
-Route::get('/calendar', function () {
-    return view('test');
-})->name('calendar');
+Route::get('/search', 'SiteDataController@search')->name('search');
+Route::get('/calendar', 'SiteDataController@calendar')->name('calendar');
 
 Route::get('/gradebook', 'UserController@gradebook')->name('gradebook');
 Route::get('/dashboard', 'SiteDataController@dashboard')->name('dashboard');

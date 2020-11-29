@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Course extends Model
 {
     use HasFactory;
@@ -27,8 +27,30 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\CourseMaterialTopic', 'course_id', 'id');
     }
+    public function course_materials()
+    {
+        return $this->hasManyThrough('App\Models\CourseMaterial', 'App\Models\CourseMaterialTopic');
+    }
 
     public function getImageURL() {
         return $this->image ? $this->image : '/img/course-default.svg';
+    }
+    public function getStatus() 
+    {
+        $now = Carbon::now();
+        $start_date = $this->start_date;
+        $end_date = $this->end_date;
+        if($now > $end_date)
+        {
+            return "past";
+        }
+        else if ($now < $start_date) 
+        {
+            return "future";
+        }
+        else if ($now >= $start_date && $now <= $end_date)
+        {
+            return "present";
+        }
     }
 }

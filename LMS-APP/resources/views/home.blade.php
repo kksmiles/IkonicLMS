@@ -121,6 +121,16 @@
         <div class="w-full h-64 bg-cover rounded-md text-center overflow-hidden" style="background-image: url('{{ asset($course->getImageURL()) }}')" title="Course Image">
         </div>
         <hr class="block lg:hidden mt-5 mb-5">
+        <div class="grid grid-cols-2 mt-8">
+            <div class="text-sm my-auto text-center">
+                <p class="text-black text-lg font-bold leading-none">Start Date</p>
+                <p class="text-gray-600 text-sm mt-5">{{ date('jS F Y', strtotime($course->start_date)) }}</p>
+            </div>
+            <div class="text-sm my-auto ml-8 text-center">
+                <p class="text-black text-lg font-bold leading-none">End Date</p>
+                <p class="text-gray-600 text-sm mt-5">{{ date('jS F Y', strtotime($course->end_date)) }}</p>
+            </div>
+        </div>
     </div>
     <div class="p-1 flex flex-col justify-between leading-normal ml-0 lg:ml-8">
         <div class="mb-8 mt-3 lg:mt-0">
