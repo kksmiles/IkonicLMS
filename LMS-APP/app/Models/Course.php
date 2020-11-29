@@ -13,7 +13,7 @@ class Course extends Model
 
     public function learners()
     {
-        return $this->belongsToMany('App\Models\User', 'learner_course', 'course_id', 'learner_id');
+        return $this->belongsToMany('App\Models\User', 'learner_course', 'course_id', 'learner_id')->withPivot('grades');
     }
     public function instructors()
     {
@@ -27,10 +27,7 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\CourseMaterialTopic', 'course_id', 'id');
     }
-    public function class_periods()
-    {
-        return $this->hasMany('App\Models\ClassPeriod', 'course_id', 'id');
-    }
+
     public function getImageURL() {
         return $this->image ? $this->image : '/img/course-default.svg';
     }

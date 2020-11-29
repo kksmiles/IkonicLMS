@@ -24,11 +24,14 @@
             <h2 class="text-lg lg:text-2xl">
                 {{ $course_material->title }}
             </h2>
+            <p class="text-justify text-base mt-5">
+                {{ $course_material->description }}
+            </p> 
             @if($course_material->file_type == "pdf" 
             || $course_material->file_type == "ppt" 
             || $course_material->file_type == "zip"
             )
-                <iframe class="w-full mt-5" src="{{ $course_material->course_material_file }}">
+                <iframe class="w-full h-full mt-5" src="{{ $course_material->course_material_file }}">
                     This browser does not support PDFs. Please download the PDF to view it: Download PDF
                 </iframe>
                 @elseif($course_material->file_type == "3GP" 
@@ -44,9 +47,7 @@
                 <img class="w-full mt-5 p-10" src="{{ $course_material->getFileURL() }}">
                 <p class="text-center text-xl">No file</p>
             @endif
-            <p class="text-justify text-base mt-5">
-                {{ $course_material->description }}
-            </p> 
+            
         </div>
         <div class="bg-gray-100 px-5 py-2">
             <h2 class="text-lg lg:text-2xl">

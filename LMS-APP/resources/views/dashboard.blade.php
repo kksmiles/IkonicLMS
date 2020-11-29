@@ -9,6 +9,7 @@
 
 <div class="grid gap-10 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 mt-10">
     @foreach($courses as $course)
+    <a href="{{ route('courses.show', $course->id) }}">
         <div class="bg-white rounded-md shadow-md">
             <div class="w-full h-64 bg-cover rounded-t-md text-center overflow-hidden" style="background-image: url('{{ asset($course->getImageURL()) }}')" title="Course Image">
             </div>
@@ -27,18 +28,18 @@
                     <div class="grid grid-cols-2 mt-5">
                         <div class="text-sm my-auto">
                             <p class="text-black text-lg font-bold leading-none">82%</p>
-                            <p class="text-gray-600 text-base mt-5">Attendance</p>
+                            <p class="text-gray-600 text-base mt-5">Assignment Grades</p>
                         </div>
                         <div class="text-sm my-auto ml-8">
                             <p class="text-black text-lg font-bold leading-none">TBD</p>
-                            <p class="text-gray-600 text-base mt-5">Grades</p>
+                            <p class="text-gray-600 text-base mt-5">Exam grades</p>
                         </div>
                     </div>
                 </div>
             </div>
             
         </div>    
-    
+    </a>
     @endforeach
 </div>
 

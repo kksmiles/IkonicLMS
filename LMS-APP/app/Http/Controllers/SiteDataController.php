@@ -27,7 +27,8 @@ class SiteDataController extends Controller
     {
         $courses = Course::paginate(5);
         $site_datas = SiteData::all();
-        return view('home', compact('courses', 'site_datas'));
+        $temp = new SiteData();
+        return view('home', compact('courses', 'site_datas', 'temp'));
     }
     public function dashboard()
     {

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use App\Models\CourseMaterialTopic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -148,5 +150,68 @@ class CourseController extends Controller
     {
         $course->delete();
         return redirect(route('courses.index'))->with('success', 'Course deleted successfully');
+    }
+
+    public function indexGrades($id)
+    {
+        $course = Course::findOrFail($id);
+        return view('courses.gradebooks.index', compact('course'));
+    }
+    public function createGrades(Request $request, $id)
+    {
+        $course = Course::findOrFail($id);
+        $user = User::findOrFail($request['user_id']);
+        return view('courses.gradebooks.create', compact('course', 'user'));
+    }
+    public function storeGrades(Request $request, $id)
+    {
+        $attributes = $request->validate([
+            'user_id' => ['numeric'],
+            'grades' => ['numeric', 'min:0', 'max:100'],
+        ]); 
+        $course = Course::findOrFail($id);
+        DB::table('learner_course')
+        ->where('learner_id', $request->user_id)
+        ->where('course_id', $course->id)
+        ->update(['grades' => $request->grades]);
+        return redirect(route('courses.grades.index', $course->id));
+    }
+
+    public function removeLearner(Request $request)
+    {
+        User::find($request['learner_id'])->learner_courses()->detach($request['course_id']);
+        return redirect(route('courses.show', $request['course_id']))->with('success', 'User removed successfully');
+    }
+
+    public function addLearner($id)
+    {
+        $course = Course::findOrFail($id);
+        $users = User::where('role', 3)->get();
+        return view('courses.admin.add-learner', compact('course', 'users'));
+    }
+    public function storeLearner(Request $request)
+    {
+        $course = Course::find($request['course_id']);
+        $course->learners()->sync($request['users']);
+        return redirect(route('courses.show', $request['course_id']))->with('success', 'Users enrolled successfully');
+    }
+
+    public function removeInstructor(Request $request)
+    {
+        User::find($request['instructor_id'])->instructor_courses()->detach($request['course_id']);
+        return redirect(route('courses.show', $request['course_id']))->with('success', 'User removed successfully');
+    }
+
+    public function addInstructor($id)
+    {
+        $course = Course::findOrFail($id);
+        $users = User::where('role', 2)->get();
+        return view('courses.admin.add-instructor', compact('course', 'users'));
+    }
+    public function storeInstructor(Request $request)
+    {
+        $course = Course::find($request['course_id']);
+        $course->instructors()->sync($request['users']);
+        return redirect(route('courses.show', $request['course_id']))->with('success', 'Users enrolled successfully');
     }
 }

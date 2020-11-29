@@ -14,9 +14,14 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\User' => 'App\Policies\UserPolicy',
+        'App\Models\Batch' => 'App\Policies\BatchPolicy',
+        'App\Models\Department' => 'App\Policies\DepartmentPolicy',
+        'App\Models\SiteData' => 'App\Policies\SiteDataPolicy',
         'App\Models\Course' => 'App\Policies\CoursePolicy',
         'App\Models\CourseMaterial' => 'App\Policies\CourseMaterialPolicy',
+        'App\Models\CourseMaterialTopic' => 'App\Policies\CourseMaterialTopicPolicy',
         'App\Models\Comment' => 'App\Policies\CommentPolicy',
+        'App\Models\LearnerSubmission' => 'App\Policies\SubmissionPolicy',
     ];
 
     /**

@@ -25,14 +25,6 @@
                     <span class="mx-3">Site Home</span>
                 </a>
 
-                <a class="{{ Route::currentRouteNamed('dashboard') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('dashboard') }}">
-                    <span class="h-6 w-6">
-                        <i class="fas fa-columns"></i>
-                    </span>
-
-                    <span class="mx-3">Dashboard</span>
-                </a>
-
                 <a class="{{ \Request::is('departments') ? 'sidebar-nav-active' : 'sidebar-nav-inactive' }}" href="{{ route('departments.index') }}">
                     <span class="h-6 w-6">
                         <i class="fas fa-building"></i>

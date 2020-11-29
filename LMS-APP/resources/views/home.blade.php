@@ -101,15 +101,18 @@
         </div>
     </div>
 </div>
-@can('create', $site_data)
-<div class="flex justify-end mt-4">
-    <a href="{{ route('site-datas.create') }}">
-        <button class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
-            Add new announcement
-        </button>
-    </a>
-</div>
+
+@can('create', $temp)
+    <div class="flex justify-end mt-4">
+        <a href="{{ route('site-datas.create') }}">
+            <button class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
+                Add new announcement
+            </button>
+        </a>
+    </div>
 @endcan
+
+
 
 <h3 class="text-gray-700 text-2xl font-semibold mt-5">Available Courses</h3>
 @foreach($courses as $course)

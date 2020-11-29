@@ -17,19 +17,18 @@
     </h3>
 </div>
 
-<!-- component -->
 <div class="w-full lg:flex p-5 bg-white mt-5 rounded-md shadow-md">
     <div class="w-full lg:w-3/12 flex-none">
         <div class="w-full h-64 bg-cover rounded-md text-center overflow-hidden" style="background-image: url('{{ asset($course->getImageURL()) }}')" title="Course Image">
         </div>
-        <div class="grid grid-cols-2 mt-3">
-            <div class="text-sm my-auto">
-                <p class="text-black text-lg font-bold mt-5 text-center">50%</p>
-                <p class="text-black text-lg leading-none mt-3 text-center">Assignment</p>
+        <div class="grid grid-cols-2 mt-8">
+            <div class="text-sm my-auto text-center">
+                <p class="text-black text-lg font-bold leading-none">Start Date</p>
+                <p class="text-gray-600 text-sm mt-5">{{ date('jS F Y', strtotime($course->start_date)) }}</p>
             </div>
-            <div class="text-sm my-auto ml-8">
-                <p class="text-black text-lg font-bold mt-5 text-center">50%</p>
-                <p class="text-black text-lg leading-none mt-3 text-center">Examination</p>
+            <div class="text-sm my-auto ml-8 text-center">
+                <p class="text-black text-lg font-bold leading-none">End Date</p>
+                <p class="text-gray-600 text-sm mt-5">{{ date('jS F Y', strtotime($course->end_date)) }}</p>
             </div>
         </div>
         <hr class="block lg:hidden mt-5 mb-5">
@@ -41,7 +40,11 @@
                 {{ $course->description }}
             </p>
         </div>
-        <div class="text-black font-bold text-xl">Instructors</div>
+        <div class="text-black font-bold text-xl">
+            Instructors
+
+        </div>
+        
         <div class="flex items-center">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10 mt-5">
                 @foreach($course->instructors as $instructor)
@@ -61,22 +64,20 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="grid grid-cols-2 bg-gray-200 p-3 rounded-md shadow-md">
-                    <div class="text-sm my-auto text-center">
-                        <p class="text-black text-lg font-bold leading-none">Start Date</p>
-                        <p class="text-gray-600 text-base mt-5">{{ date('jS F Y', strtotime($course->start_date)) }}</p>
-                    </div>
-                    <div class="text-sm my-auto ml-8 text-center">
-                        <p class="text-black text-lg font-bold leading-none">End Date</p>
-                        <p class="text-gray-600 text-base mt-5">{{ date('jS F Y', strtotime($course->end_date)) }}</p>
-                    </div>
-                </div>
+                @if(Auth::user()->role == 1)
+            
+                <a href="{{ route('course-instructor.add', $course->id) }}">
+                    <button class="px-6 py-3 bg-indigo-600 rounded-md text-lg text-white font-medium tracking-wide hover:bg-indigo-500 ml-3">
+                        Assign Instructor
+                    </button>
+                </a>
+                @endif
             </div>
         </div>
     </div>
 </div>
 @if(Auth::user()->role == 1)
-    
+    @include('courses.admin.show')
     @else
     <div class="flex flex-col mt-6">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -84,18 +85,22 @@
                 <table class="min-w-full">
                     <tbody class="bg-white">
                         <tr>
+                            @if(Auth::user()->role==2)
                             <td class="px-2 py-4 whitespace-no-wrap">
                                 <div class="flex items-center">
                                     <div class="ml-4">
                                         <div class="text-sm leading-5 font-medium text-gray-900">
-                                            <i class="fa fa-calendar text-xl"></i> 
-                                            <span class="ml-3 my-auto text-blue-600 text-base">
-                                                Attendance Record
-                                            </span>
+                                            <a href="{{ route('courses.grades.index', $course->id) }}">
+                                                <i class="fas fa-book text-xl"></i> 
+                                                <span class="ml-3 my-auto text-blue-600 text-base">
+                                                    Grades
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </td>
+                            @endif
     
                             
                             <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
@@ -243,6 +248,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                        @if(Auth::user()->role == 2 && !(count($course_material_topic->course->instructors->where('id', Auth::id())) == 0))
                                         <a href="{{ route('assignments.edit', $assignment->id) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
                                             <span x-data="{ open: false }">
                                             <a class="ml-3 text-red-600 hover:text-red-900" @click="open = true">Delete</a>
@@ -278,71 +284,11 @@
                                                 </div>
                                             </div>
                                         </span>
-    
-                                        @if(Auth::user()->learner_progress()->where('learner_id', Auth::id())->exists())
-                                            <input type="checkbox" class="ml-3 form-checkbox h-5 w-5 text-indigo-600 border-gray-700" {{ ($course_material->learner_progress()->where('learner_id', Auth::id())->first()->pivot->completed) ? 'checked' : '' }}>
-                                            @else
-                                            <input type="checkbox" class="ml-3 form-checkbox h-5 w-5 text-indigo-600 border-gray-700">
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
-                            @foreach($course_material_topic->quizzes as $quiz)
-                            <tr>
-                                <td class="px-2 py-4 whitespace-no-wrap">
-                                    <div class="flex items-center">
-                                        <div class="ml-4">
-                                            <div class="text-sm leading-5 font-medium text-gray-900">
-                                                <i class="fa fa-question text-xl"></i>
-                                                <span class="ml-3 my-auto text-blue-600 text-base">
-                                                    <a href="{{ route('quizzes.show', $quiz->id) }}">
-                                                        {{ $quiz->title }}
-                                                    </a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="{{ route('quizzes.edit', $quiz->id) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
-                                        <span x-data="{ open: false }">
-                                        <a class="ml-3 text-red-600 hover:text-red-900" @click="open = true">Delete</a>
-                                        <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full" style="background-color: rgba(0,0,0,.5);" x-show="open">
-                                            <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-6 md:mx-0" @click.away="open = false">
-                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                    <h3 class="text-lg font-medium leading-6 text-gray-900">
-                                                        Delete material
-                                                    </h3>
-        
-                                                    <div class="mt-5">
-                                                        <p class="text-sm leading-5 text-gray-500">
-                                                            Are you sure you want to delete {{ $quiz->title }}?
-                                                        </p>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="mt-5 sm:mt-6">
-                                                    <span class="flex flex-row-reverse w-full rounded-md shadow-sm">
-                                                        <button onclick="event.preventDefault(); document.getElementById('delete-form{{ $quiz->title }}').submit();" class="inline-flex justify-center w-2/6 px-4 py-2 text-white bg-red-600 rounded hover:bg-red-900">
-                                                            Delete
-                                                        </button>
-                                                        <button @click="open = false" class="mr-3 inline-flex justify-center w-2/6 px-4 py-2 text-gray-700">
-                                                            Cancel
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <form id="delete-form{{ $quiz->title }}" action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" class="hidden">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-        
-                                            </div>
-                                        </div>
-                                    </span>
-                                    <input type="checkbox" class="ml-3 form-checkbox h-5 w-5 text-indigo-600 border-gray-700">
-                                </td>
-                            </tr>
-                            @endforeach
+                            
                             @if(Auth::user()->role == 2 && !(count($course_material_topic->course->instructors->where('id', Auth::id())) == 0))
                             <tr>
                                 <td></td>
@@ -364,24 +310,6 @@
                                                             <div class="container flex mx-auto w-full items-center justify-center">
     
                                                                 <ul class="flex flex-col bg-gray-300 p-4">
-                                                                    <a href="#" onclick="document.getElementById('quizForm{{ $course_material_topic->id }}').submit();">    
-                                                                        <li class="border-gray-400 flex flex-row mb-2">
-                                                                            <div class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
-                                                                                <div class="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">
-                                                                                    <i class="fa fa-question"></i>
-                                                                                </div>
-                                                                                <div class="flex-1 pl-1 mr-16">
-                                                                                    <div class="font-medium">Quiz</div>
-                                                                                    <div class="text-gray-600 text-sm">Submit multiple choice questions for exercise</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <form id="quizForm{{ $course_material_topic->id }}" action="{{ route('quizzes.create') }}">
-                                                                                @csrf
-                                                                                <input type="hidden" value="{{ $course_material_topic->course_id }}" name="course_id">
-                                                                                <input type="hidden" value="{{ $course_material_topic->id }}" name="topic">
-                                                                            </form>
-                                                                        </li>
-                                                                    </a>
                                                                     <a href="#" onclick="document.getElementById('assignmentForm{{ $course_material_topic->id }}').submit();">
                                                                         <li class="border-gray-400 flex flex-row mb-2">
                                                                             <div class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">

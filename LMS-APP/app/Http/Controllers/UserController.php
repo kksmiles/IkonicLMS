@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class UserController extends Controller
 {
@@ -142,5 +143,10 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect(route('users.index'))->with('success', 'User deleted successfully');
+    }
+
+    public function gradebook()
+    {
+        return view('users.gradebook');
     }
 }

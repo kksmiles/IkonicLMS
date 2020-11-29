@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function learner_courses()
     {
-        return $this->belongsToMany('App\Models\Course', 'learner_course', 'learner_id', 'course_id');
+        return $this->belongsToMany('App\Models\Course', 'learner_course', 'learner_id', 'course_id')->withPivot('grades');
     }
     public function learner_progress()
     {

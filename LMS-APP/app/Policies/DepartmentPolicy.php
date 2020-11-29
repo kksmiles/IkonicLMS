@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Comment;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CommentPolicy
+class DepartmentPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class CommentPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->role==1;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Department  $department
      * @return mixed
      */
-    public function view(User $user, Comment $comment)
+    public function view(User $user, Department $department)
     {
-        return true;
+        return optional($user);
     }
 
     /**
@@ -41,54 +41,54 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->role==1;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Department  $department
      * @return mixed
      */
-    public function update(User $user, Comment $comment)
+    public function update(User $user, Department $department)
     {
-        return $user->id==$comment->user_id;
+        return $user->role==1;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Department  $department
      * @return mixed
      */
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user, Department $department)
     {
-        return $user->id == $comment->user_id;
+        return $user->role==1;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Department  $department
      * @return mixed
      */
-    public function restore(User $user, Comment $comment)
+    public function restore(User $user, Department $department)
     {
-        return $user->id == $comment->user_id;
+        return $user->role==1;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Department  $department
      * @return mixed
      */
-    public function forceDelete(User $user, Comment $comment)
+    public function forceDelete(User $user, Department $department)
     {
-        return $user->id == $comment->user_id;
+        return $user->role==1;
     }
 }
