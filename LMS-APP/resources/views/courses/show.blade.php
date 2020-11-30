@@ -58,9 +58,12 @@
                                 <p class="text-black text-base leading-none">{{ $instructor->full_name }}</p>
                             </a>
                             <hr class="mr-5 mt-1 mb-1">
+                            @if(count($instructor->departments)!=0)
                             <a href="{{ route('departments.show', $instructor->departments->first()->id) }}">
                                 <p class="text-gray-600 text-sm">{{ $instructor->departments->first()->name }}</p>
                             </a>
+                            @endif
+
                         </div>
                     </div>
                 @endforeach
